@@ -1,7 +1,7 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Canvassing Helper</title>
+  <title>Philly Trail Waze</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,45 +13,53 @@
   <!-- The map -->
   <div class="map" id="map">Map</div>
 
-  <!-- The filters -->
-  <div class="filters">
-    <div class="filter-field">
-      <label for="precinct-filter">Precinct</label>
-      <input id="precinct-filter" value="3927">
-    </div>
-
-    <div class="filter-field">
-      <label for="recency-filter">Recency</label>
-      <input id="recency-filter" type="date">
-    </div>
-
-    <div class="filter-field">
-      <label for="party-filter">Party</label>
-      <select id="party-filter">
-        <option value="">(All Parties)</option>
-      </select>
-    </div>
-
-    <div class="filter-summary">
-      Listing <span class="filtered-count" id="filtered-count">...</span>
-      Neighbor(s) in <span class="filtered-precinct" id="filtered-precinct">...</span>
-    </div>
+  <!-- The issue reporter -->
+  <div class="report-issue-btn">
+    <button>Report an Issue</button>
   </div>
 
-  <!-- The list of neighbors -->
-  <div class="neighbors">
-    <ul></ul>
+  <div class="issue-report-form hidden">
+    <div class="issue-report-closer">
+      <button class="close-issue-form">Cancel</button>
+    </div>
+
+    <div class="issue-report-step step-select-trail">
+      <p>On the map, click the trail where you found the issue.</p>
+      <button class="continue-btn">Continue...</button>
+    </div>
+
+    <div class="issue-report-step step-select-point">
+      <p>Click a point on the map nearest to the issue.</p>
+      <button class="continue-btn">Continue...</button>
+    </div>
+
+    <div class="issue-report-step step-give-details">
+      <label for="issue-category">Type of issue...</label>
+      <select class="full-width-issue-field" id="issue-category">
+        <option value="debris">Debris</option>
+        <option value="poop">Poop</option>
+        <option value="trash">Trash</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="issue-datetime">When you encountered the issue...</label>
+      <input class="full-width-issue-field" id="issue-datetime" type="datetime-local">
+
+      <textarea class="full-width-issue-field" id="issue-details" placeholder="Give any details about the issue..."></textarea>
+
+      <button>Submit Issue Report</button>
+    </div>
   </div>
 
   <!--======== SCRIPTS ========-->
   <!-- Leaflet JS library -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
 
-  <!-- Papa Parse, for CSV parsing -->
-  <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
+  <!-- Turf (for geoprocessing) -->
+  <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
 
   <script src="js/tools.js"></script>
-  <script src="js/parties.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/issue_reporter.js"></script>
 </body>
 </html>

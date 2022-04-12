@@ -1,164 +1,71 @@
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: 'Open Sans', sans-serif;
   font-weight: 400;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  background-color: #B6E59E;
+  border: 1px solid gray;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none;
 }
 
 .map {
-  height: 300px;
+  flex-grow: 1;
 }
 
-.filters {
-  padding: 1rem;
-  background-color: white;
+.report-issue-btn {
+  margin-top: -4rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 1.5rem;
+  z-index: 400;
 }
 
-.filter-summary {
-  text-align: center;
+.issue-report-form {
+  position: relative;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 1rem;
+}
+
+.issue-report-closer {
+  position: absolute;
+  top: -2rem;
+  z-index: 400;
+}
+
+.issue-report-closer button {
+  background-color: #E6AC7F;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.step-give-details {
   padding-top: 1rem;
-  font-weight: 600;
-  font-size: 1.2rem;
 }
 
-.neighbors > ul {
-  list-style: none;
-  padding: 1rem;
+.step-give-details label {
+  display: block;
 }
 
-.neighbors li {
-  padding: 0.5rem 0;
-  border-top: 1px solid silver;
-}
-
-.filter-field {
-  display: flex;
-  margin: 0.25rem 0;
-}
-
-.filter-field label {
-  width: 6rem;
-  padding: 0.25rem 0;
-  font-weight: 600;
-}
-
-.filter-field input,
-.filter-field select {
-  min-width: 0;
+.step-give-details .full-width-issue-field {
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid gray;
-  background-color: #fff8f0;
-  padding-left: 0.25rem;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-}
-
-.neighbor .name {
-  display: block;
-}
-
-.neighbor .address {
-  display: block;
-  font-weight: 300;
-}
-
-.neighbor .party,
-.neighbor .last-vote-date {
-  display: inline-block;
-  font-size: 0.8rem;
-  color: #444;
-  background-color: #eee;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.75rem;
-}
-
-/*
-  Emojis:
-  - 🗳️ 01F5F3
-  - 📅 01F4C5
-*/
-.neighbor .party::before {
-  content: "\01F5F3";
-  padding-right: 0.5rem;
-}
-
-.neighbor .last-vote-date::before {
-  content: "\01F4C5";
-  padding-right: 0.5rem;
-}
-
-/*
-  Bootstrap's screen-width breakpoints:
-  X-Small    < 576px
-  Small      ≥ 576px
-  Medium     ≥ 768px
-  Large      ≥ 992px
-  X-large    ≥ 1200px
-  XX-large   ≥ 1400px
-
-  (Source: https://getbootstrap.com/docs/5.0/layout/breakpoints/#available-breakpoints)
-*/
-@media screen and (min-width: 768px) {
-  .map {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-  }
-
-  body {
-    padding-left: auto;
-    padding-right: 1rem;
-  }
-
-  .filters,
-  .neighbors {
-    box-sizing: border-box;
-    width: 40%;
-    margin-left: auto;
-    pointer-events: visible;
-    position: relative;
-  }
-
-  .filters {
-    position: sticky;
-    top: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid gray;
-    margin-top: 1rem;
-    z-index: 1;
-    background-color: #eee;
-    box-shadow: 3px 3px 5px silver;
-  }
-
-  .neighbors > ul {
-    pointer-events: all;
-    padding-top: 0;
-  }
-
-  .neighbors li {
-    background-color: white;
-    margin: 1rem 0;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    border: 1px solid gray;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .neighbors > ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-  }
-
-  .neighbors li {
-    display: inline-block;
-    width: calc(50% - 3rem);
-    pointer-events: all;
-    margin-top: 0;
-  }
+  font-family: inherit;
+  font-weight: 1;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
