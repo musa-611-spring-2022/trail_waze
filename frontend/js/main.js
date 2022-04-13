@@ -1,3 +1,5 @@
+const apiHost = 'http://localhost:3000';
+
 const map = L.map('map').setView([39.95, -75.16], 13);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibWp1bWJlLXRlc3QiLCJhIjoiY2wwb3BudmZ3MWdyMjNkbzM1c2NrMGQwbSJ9.2ATDPobUwpa7Ou5jsJOGYA', {
@@ -18,4 +20,27 @@ const loadTrails = function () {
     });
 }
 
+let issuesLayer = null;
+const loadIssues = function () {
+  fetch(`${apiHost}/trail_issues/`)
+    .then(resp => resp.json())
+    .then(data => {
+      issuesLayer = L.geoJSON(data, {
+        pointToLayer: (feature, latlng) => {
+          const icon = L.icon({
+            iconUrl: `images/markers/${feature.properties.category}-marker.png`,
+            iconSize: [35, 41],
+            iconAnchor: [18, 41],
+            shadowUrl: 'images/markers/marker-shadow.png',
+            shadowSize: [35, 41],
+            shadowAnchor: [13, 41],
+          });
+          return L.marker(latlng, { icon })
+        }
+      });
+      issuesLayer.addTo(map);
+    });
+}
+
 loadTrails();
+loadIssues();

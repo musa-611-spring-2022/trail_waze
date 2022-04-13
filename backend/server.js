@@ -98,9 +98,10 @@ app.get('/trail_issues/', (req, res) => {
   const currentDateTime = new Date();
   const currentTimestamp = currentDateTime.getTime();
 
-  const secondsPerMonth = 30 * 24 * 60 * 60;
-  const oneMonthAgo = new Date(currentTimestamp - secondsPerMonth);  // Calculate 30 days ago.
+  const millisecsPerMonth = 30 * 24 * 60 * 60 * 1000;
+  const oneMonthAgo = new Date(currentTimestamp - millisecsPerMonth);  // Calculate 30 days ago.
 
+  console.log(`Retrieving issues created after ${oneMonthAgo}`)
   db.select().from('trail_issue').where('created_at', '>', oneMonthAgo.toISOString())
     .then(records => {
       res.json({

@@ -1,5 +1,3 @@
-const apiHost = 'http://localhost:3000';
-
 const reportIssueToggleEl = document.querySelector('.report-issue-btn');
 const reportIssueBtn = document.querySelector('.report-issue-btn button');
 const closeIssueFormBtns = document.querySelectorAll('.close-issue-form');
@@ -153,6 +151,7 @@ const submitIssueData = function () {
     .then(data => {
       console.log('Received the following response:')
       console.log(data);
+      issuesLayer.addData(data);
     });
 }
 
