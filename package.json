@@ -9,10 +9,49 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@vscode/sqlite3": "^5.0.8",
     "better-sqlite3": "^7.5.1",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "knex": "^1.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb": "^19.0.4"
+  },
+  "eslintConfig": {
+    "extends": "airbnb",
+    "globals": {
+      "L": "readonly",
+      "confirm": "readonly",
+      "document": "readonly",
+      "fetch": "readonly",
+      "turf": "readonly"
+    },
+    "rules": {
+      "arrow-parens": "off",
+      "no-console": "off",
+      "no-plusplus": "off",
+      "no-multiple-empty-lines": "off",
+      "no-multi-spaces": "off",
+      "prefer-const": "off",
+      "prefer-rest-params": "off",
+      "no-alert": "off",
+      "no-restricted-globals": "off",
+      "no-restricted-syntax": [
+        "error",
+        {
+          "selector": "ForInStatement",
+          "message": "for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array."
+        },
+        {
+          "selector": "LabeledStatement",
+          "message": "Labels are a form of GOTO; using them makes code confusing and hard to maintain and understand."
+        },
+        {
+          "selector": "WithStatement",
+          "message": "`with` is disallowed in strict mode because it makes code impossible to predict and optimize."
+        }
+      ]
+    }
   }
 }

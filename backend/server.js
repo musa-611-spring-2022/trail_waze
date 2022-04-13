@@ -11,19 +11,19 @@
 //  HTTP. Suffice to say that including `app.use(cors())` is something you'll
 //  often have to do).
 
-const express = require('express')
-const knex = require('knex')
-const cors = require('cors')
+const express = require('express');
+const knex = require('knex');
+const cors = require('cors');
 
-const app = express()
-app.use(express.json())
-app.use(cors())
+const app = express();
+app.use(express.json());
+app.use(cors());
 
 const db = knex({
   client: 'better-sqlite3',
   connection: {
-    filename: "./db.sqlite3"
-  }
+    filename: './db.sqlite3',
+  },
 });
 
 
@@ -44,16 +44,16 @@ const recordToFeature = function (record) {
     type: 'Point',
     coordinates: [record.longitude, record.latitude],
   };
-  const properties = {...record};  // This line makes a copy of the record.
+  const properties = { ...record };  // This line makes a copy of the record.
   delete properties.latitude;
   delete properties.longitude;
 
   return {
     type: 'Feature',
-    geometry: geometry,
-    properties: properties,
-  }
-}
+    geometry,
+    properties,
+  };
+};
 
 // * Deserialization is the process of converting data that comes from a client
 //   into something useable be your system. In this case, we're creating a
@@ -63,14 +63,17 @@ const recordToFeature = function (record) {
 
 const featureToRecord = function (feature) {
   const coords = feature.geometry.coordinates;
-  const record = {...feature.properties};  // This makes a copy of the feature properties.
-  record.latitude = coords[1];
-  record.longitude = coords[0];
-  record.created_at = feature.properties.created_at ? (new Date(feature.properties.created_at)).toISOString() : null;
-  record.encountered_at = feature.properties.encountered_at ? (new Date(feature.properties.encountered_at)).toISOString() : null;
+  const record = { ...feature.properties };  // This makes a copy of the feature properties.
+  [record.longitude, record.latitude] = coords;
+  record.created_at = feature.properties.created_at
+    ? (new Date(feature.properties.created_at)).toISOString()
+    : null;
+  record.encountered_at = feature.properties.encountered_at
+    ? (new Date(feature.properties.encountered_at)).toISOString()
+    : null;
 
   return record;
-}
+};
 
 
 // Routing Functions
@@ -101,15 +104,15 @@ app.get('/trail_issues/', (req, res) => {
   const millisecsPerMonth = 30 * 24 * 60 * 60 * 1000;
   const oneMonthAgo = new Date(currentTimestamp - millisecsPerMonth);  // Calculate 30 days ago.
 
-  console.log(`Retrieving issues created after ${oneMonthAgo}`)
+  console.log(`Retrieving issues created after ${oneMonthAgo}`);
   db.select().from('trail_issue').where('created_at', '>', oneMonthAgo.toISOString())
     .then(records => {
       res.json({
         type: 'FeatureCollection',
         features: records.map(recordToFeature),  // Serialize the records.
-      })
-    })
-})
+      });
+    });
+});
 
 app.post('/trail_issues/', (req, res) => {
   const currentDateTime = new Date();
@@ -121,7 +124,7 @@ app.post('/trail_issues/', (req, res) => {
       const newFeature = recordToFeature(insertedRecords[0]);
       res.json(newFeature);
     });
-})
+});
 
 
 // Running the Server
@@ -135,5 +138,5 @@ app.post('/trail_issues/', (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`)
-})
+  console.log(`Listening on port ${port}`);
+});

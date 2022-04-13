@@ -10,15 +10,17 @@ L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/tiles/256/{z}/
 
 let trailsLayer = null;
 const loadTrails = function () {
-  fetch(`https://opendata.arcgis.com/datasets/48323d574068405bbf5336b9b5b29455_0.geojson`)
+  fetch('https://opendata.arcgis.com/datasets/48323d574068405bbf5336b9b5b29455_0.geojson')
     .then(resp => resp.json())
     .then(data => {
-      trailsLayer = L.geoJSON(data, { style: {
-        weight: 6
-      } });
+      trailsLayer = L.geoJSON(data, {
+        style: {
+          weight: 6,
+        },
+      });
       trailsLayer.addTo(map);
     });
-}
+};
 
 let issuesLayer = null;
 const loadIssues = function () {
@@ -35,12 +37,12 @@ const loadIssues = function () {
             shadowSize: [35, 41],
             shadowAnchor: [13, 41],
           });
-          return L.marker(latlng, { icon })
-        }
+          return L.marker(latlng, { icon });
+        },
       });
       issuesLayer.addTo(map);
     });
-}
+};
 
 loadTrails();
 loadIssues();
