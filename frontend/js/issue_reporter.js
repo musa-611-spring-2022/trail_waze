@@ -1,3 +1,5 @@
+const apiHost = 'http://localhost:3000';
+
 const reportIssueToggleEl = document.querySelector('.report-issue-btn');
 const reportIssueBtn = document.querySelector('.report-issue-btn button');
 const closeIssueFormBtns = document.querySelectorAll('.close-issue-form');
@@ -134,19 +136,24 @@ const submitIssueData = function () {
       coordinates: [issueLatLng.lng, issueLatLng.lat],
     },
     properties: {
+      category: issueCategorySelect.value,
+      encountered_at: (new Date(issueDatetime.value)).toISOString(),
+      details: issueDetailText.value,
       trail_id: trailFeature.properties['OBJECTID'],
       trail_label: trailFeature.properties['LABEL'],
-      issue_category: issueCategorySelect.value,
-      issue_datetime: issueDatetime.value,
-      issue_details: issueDetailText.value,
     },
   };
 
-  // fetch('http://localhost:3000/issues/', {
-  //   method: 'post',
-  //   body: JSON.stringify(issueData),
-  // });
-  console.log(issueData);
+  fetch(`${apiHost}/trail_issues/`, {
+    method: 'post',
+    body: JSON.stringify(issueData),
+    headers: { 'Content-Type': 'application/json' },
+  })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log('Received the following response:')
+      console.log(data);
+    });
 }
 
 
