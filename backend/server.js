@@ -65,12 +65,14 @@ const featureToRecord = function (feature) {
   const coords = feature.geometry.coordinates;
   const record = { ...feature.properties };  // This makes a copy of the feature properties.
   [record.longitude, record.latitude] = coords;
-  record.created_at = feature.properties.created_at
-    ? (new Date(feature.properties.created_at)).toISOString()
-    : null;
-  record.encountered_at = feature.properties.encountered_at
-    ? (new Date(feature.properties.encountered_at)).toISOString()
-    : null;
+
+  if (feature.properties.created_at) {
+    record.created_at = (new Date(feature.properties.created_at)).toISOString();
+  }
+
+  if (feature.properties.encountered_at) {
+    record.encountered_at = (new Date(feature.properties.encountered_at)).toISOString();
+  }
 
   return record;
 };
