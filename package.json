@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "eslint": "^8.6.0",
-    "eslint-config-airbnb": "^19.0.4"
+    "eslint-config-airbnb": "^19.0.4",
+    "nodemon": "^2.0.15"
   },
   "eslintConfig": {
     "extends": "airbnb",
