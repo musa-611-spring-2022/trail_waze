@@ -9,7 +9,7 @@
 // (Note that Cross-Origin Resource Sharing, or CORS, is not something you have
 //  to be very familiar with, except to know that it is a security feature of
 //  HTTP. Suffice to say that including `app.use(cors())` is something you'll
-//  often have to do).
+//  often have to do. https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS).
 
 const express = require('express');
 const knex = require('knex');
