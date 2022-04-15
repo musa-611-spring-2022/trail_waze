@@ -43,6 +43,7 @@ const openIssueReporterForm = function () {
 
 const closeIssueReporter = function () {
   console.log('Closing the issue reporter form.');
+  hideAllIssueReportSteps();
   reportIssueToggleEl.classList.remove('hidden');
   issueReportFormEl.classList.add('hidden');
 };
@@ -58,19 +59,36 @@ const hideAllIssueReportSteps = function () {
   });
 
   map.removeEventListener('click', handleIssuePointSelection);
+
+  trailsLayer.resetStyle();
+  if (issueReportMarker) { map.removeLayer(issueReportMarker); }
 };
 
 
 // STEP 1 - SELECT A TRAIL LAYER
 
 let issueReportSelectedLayer = null;
+const unselectedStyle = {
+  stroke: true,
+  color: 'gray',
+  opacity: 0.5,
+  weight: 6,
+  dashArray: 6,
+}
+
+const selectedStyle = {
+  stroke: true,
+  color: 'yellow',
+  opacity: 0.5,
+  weight: 6,
+}
 
 const handleTrailLayerSelection = function (evt) {
   issueReportSelectedLayer = evt.target;
-  trailsLayer.resetStyle();
-  issueReportSelectedLayer.setStyle({
-    color: 'yellow',
+  trailsLayer.eachLayer(layer => {
+    layer.setStyle(unselectedStyle)
   });
+  issueReportSelectedLayer.setStyle(selectedStyle);
   selectTrailContinueBtn.disabled = false;
 };
 
@@ -79,6 +97,7 @@ const showSelectTrailStep = function () {
   console.log('Showing the select-trail step of issue submission.');
   hideAllIssueReportSteps();
   trailsLayer.eachLayer(layer => {
+    layer.setStyle(unselectedStyle)
     layer.addEventListener('click', handleTrailLayerSelection);
   });
   selectTrailStepEl.classList.remove('hidden');
@@ -111,6 +130,7 @@ const showSelectPointStep = function () {
   console.log('Showing the select-point step of issue submission.');
   hideAllIssueReportSteps();
   map.addEventListener('click', handleIssuePointSelection);
+  issueReportSelectedLayer.setStyle(selectedStyle);
   selectPointStepEl.classList.remove('hidden');
 };
 
@@ -120,6 +140,8 @@ const showSelectPointStep = function () {
 const showDetailsStep = function () {
   console.log('Showing the details step of issue submission.');
   hideAllIssueReportSteps();
+  issueReportSelectedLayer.setStyle(selectedStyle);
+  map.addLayer(issueReportMarker);
   detailsStepEl.classList.remove('hidden');
 };
 
@@ -167,13 +189,12 @@ const resetIssueReportForm = function () {
 
   selectTrailContinueBtn.disabled = true;
   selectPointContinueBtn.disabled = true;
-
-  showSelectTrailStep();
 };
 
 
 const handleReportIssueBtnClick = maintainMapCenter(() => {
   resetIssueReportForm();
+  showSelectTrailStep();
   openIssueReporterForm();
 });
 
@@ -190,15 +211,15 @@ const handleSelectPointContinueBtnClick = maintainMapCenter(() => {
 
 const handleIssueSubmitBtnClick = maintainMapCenter(() => {
   submitIssueData();
-  closeIssueReporter();
   resetIssueReportForm();
+  closeIssueReporter();
 });
 
 const handleCloseIssueFormBtnClick = maintainMapCenter(() => {
   const confirmation = confirm('You really want to cancel this issue?');
   if (confirmation) {
-    closeIssueReporter();
     resetIssueReportForm();
+    closeIssueReporter();
   }
 });
 
