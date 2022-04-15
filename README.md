@@ -1,4 +1,7 @@
-# Philadelphia Trail Waze
+# Philadelphia "Trail Waze" App
+
+* Client-side [annotated code](docs/frontend/issue_reporter.html)
+* Server-side [annotated code](docs/backend/server.html)
 
 ## Running locally (for debugging and development)
 
