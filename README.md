@@ -1,7 +1,7 @@
 # Philadelphia "Trail Waze" App
 
-* Client-side [annotated code](docs/frontend/issue_reporter.html)
-* Server-side [annotated code](docs/backend/server.html)
+* Client-side [annotated code](https://musa-611-spring-2022.github.io/trail_waze/docs/frontend/js/issue_reporter.html)
+* Server-side [annotated code](https://musa-611-spring-2022.github.io/trail_waze/docs/backend/server.html)
 
 ## Running locally (for debugging and development)
 
