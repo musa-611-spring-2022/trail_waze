@@ -22,9 +22,20 @@ app.use(cors());
 let knexOptions;
 
 if (process.env.DATABASE_URL) {
-  knexOptions = { client: 'pg', connection: process.env.DATABASE_URL };
+  knexOptions = {
+    client: 'pg',
+    connection: {
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
+    }
+  };
 } else {
-  knexOptions = { client: 'better-sqlite3', connection: { filename: './db.sqlite3' } }
+  knexOptions = {
+    client: 'better-sqlite3',
+    connection: {
+      filename: './db.sqlite3'
+    }
+  }
 }
 
 const db = knex(knexOptions);
