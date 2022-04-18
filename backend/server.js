@@ -35,7 +35,7 @@ if (process.env.DATABASE_URL) {
     connection: {
       filename: './db.sqlite3'
     }
-  }
+  };
 }
 
 const db = knex(knexOptions);
