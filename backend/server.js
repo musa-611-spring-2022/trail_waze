@@ -19,12 +19,15 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const db = knex({
-  client: 'better-sqlite3',
-  connection: {
-    filename: './db.sqlite3',
-  },
-});
+let knexOptions;
+
+if (process.env.DATABASE_URL) {
+  knexOptions = { client: 'pg', connection: process.env.DATABASE_URL };
+} else {
+  knexOptions = { client: 'better-sqlite3', connection: { filename: './db.sqlite3' } }
+}
+
+const db = knex(knexOptions);
 
 
 // Serialization and Deserialization
