@@ -1,4 +1,5 @@
-const apiHost = 'http://localhost:3000';
+// const apiHost = 'http://localhost:3000';
+const apiHost = 'https://philly-trail-waze.herokuapp.com';
 
 const map = L.map('map').setView([39.95, -75.16], 13);
 
